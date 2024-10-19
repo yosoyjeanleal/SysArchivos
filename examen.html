@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen de Archivos en C#</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="examen-container">
+        <div id="inicio">
+            <h2>Examen sobre Archivos en C#</h2>
+            <label for="nombre">Ingrese su nombre:</label>
+            <input type="text" id="nombre" placeholder="Nombre del estudiante" required>
+            <button id="comenzar-btn">Comenzar Examen</button>
+        </div>
+
+        <div id="preguntas-container" style="display: none;">
+            <h3>Bienvenido <span id="nombre-estudiante"></span></h3>
+
+            <!-- Pregunta 1: Selección Simple -->
+            <div class="pregunta" id="pregunta-1">
+                <h4>1. ¿Qué clase se usa para crear archivos en C#?</h4>
+                <input type="radio" name="q1" value="0"> System.Data <br>
+                <input type="radio" name="q1" value="1"> System.IO.File <br>
+                <input type="radio" name="q1" value="0"> System.Text <br>
+                <input type="radio" name="q1" value="0"> System.Net <br>
+            </div>
+
+            <!-- Pregunta 2: Selección Múltiple -->
+            <div class="pregunta" id="pregunta-2">
+                <h4>2. ¿Qué clases se utilizan para leer y escribir en archivos? (Selecciona las que correspondan)</h4>
+                <input type="checkbox" name="q2" value="1"> StreamWriter <br>
+                <input type="checkbox" name="q2" value="1"> StreamReader <br>
+                <input type="checkbox" name="q2" value="0"> Console.WriteLine <br>
+                <input type="checkbox" name="q2" value="0"> ArrayList <br>
+                <input type="checkbox" name="q2" value="1"> FileStream <br>
+            </div>
+
+            <!-- Pregunta 3: Arrastrar y Soltar -->
+            <div class="pregunta" id="pregunta-3">
+                <h4>3. Arrastra las clases a su función correspondiente</h4>
+                <div class="drag-container">
+                    <div class="drag-item" draggable="true" id="File">File</div>
+                    <div class="drag-item" draggable="true" id="StreamReader">StreamReader</div>
+                    <div class="drag-item" dravggable="true" id="StreamWriter">StreamWriter</div>
+                </div>
+                <div class="drop-container">
+                    <div class="drop-zone" data-answer="File">Crear y manipular archivos:</div>
+                    <div class="drop-zone" data-answer="StreamReader">Leer archivos:</div>
+                    <div class="drop-zone" data-answer="StreamWriter">Escribir en archivos:</div>
+                </div>
+            </div>
+
+            <button id="finalizar-btn">Finalizar Examen</button>
+        </div>
+
+        <div id="resultado" style="display: none;">
+            <h2>¡Examen finalizado!</h2>
+            <p>Estudiante: <span id="nombre-resultado"></span></p>
+            <p>Tu calificación es: <span id="calificacion"></span> de 6</p>
+            <div id="respuestas-correctas"></div>
+            <button id="volver-btn">Volver a calificación</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

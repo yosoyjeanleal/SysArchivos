@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivos C#</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="/img/logo.png" alt="Logo de tu sitio">
+        </div>
+        <div class="burger" id="burger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav>
+            <ul id="nav-links">
+                <li><a href="#Definicion">Definición</a></li>
+                <li><a href="#Declaracion">Declaración</a></li>
+                <li><a href="#Creacion">Creación de Objetos</a></li>
+                <li><a href="#Manipulacion">Manipulación</a></li>S
+                <li><a href="#Resumen">Resumen</a></li>
+                <li><a href="/examen.html">Prueba</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="contenido" id="Definicion">
+        <h2>Definición de Archivos en C#</h2>
+        <p>
+            En C#, los archivos son representaciones físicas de los datos almacenados en el sistema. Los archivos permiten la lectura y escritura de datos en el disco. C# proporciona clases en el espacio de nombres
+            <code>System.IO</code> para trabajar con archivos y directorios, como la clase <code>File</code>,
+            <code>StreamReader</code>, <code>StreamWriter</code>, entre otras.
+        </p>
+    </div>
+
+    <div class="contenido" id="Declaracion">
+        <h2>Declaración de Archivos en C#</h2>
+        <p>
+            Para trabajar con archivos en C#, es necesario utilizar el espacio de nombres <code>System.IO</code>. Aquí se declara un archivo utilizando las clases disponibles. Un ejemplo básico de declaración sería:
+        </p>
+        <pre>
+            using System.IO;
+
+            class ArchivoEjemplo {
+                public void CrearArchivo() {
+                    string ruta = "ruta/del/archivo.txt";
+                    if (!File.Exists(ruta)) {
+                        File.Create(ruta);
+                    }
+                }
+            }
+        </pre>
+    </div>
+
+    <div class="contenido" id="Creacion">
+        <h2>Creación de Objetos para Manejo de Archivos</h2>
+        <p>
+            Para trabajar con archivos en C#, puedes crear objetos de clases como <code>StreamWriter</code> y
+            <code>StreamReader</code> para escribir y leer archivos, respectivamente. Por ejemplo:
+        </p>
+        <pre>
+            using System.IO;
+
+            class ArchivoEjemplo {
+                public void EscribirArchivo() {
+                    string ruta = "ruta/del/archivo.txt";
+                    using (StreamWriter escritor = new StreamWriter(ruta)) {
+                        escritor.WriteLine("Este es un ejemplo de escritura en un archivo.");
+                    }
+                }
+            }
+        </pre>
+    </div>
+
+    <div class="contenido" id="Manipulacion">
+        <h2>Manipulación de Archivos en C#</h2>
+        <p>
+            Una vez que tienes un archivo creado, puedes leer su contenido o escribir más datos en él utilizando
+            <code>StreamReader</code> y <code>StreamWriter</code>. Aquí un ejemplo de cómo leer un archivo:
+        </p>
+        <pre>
+            using System.IO;
+
+            class ArchivoEjemplo {
+                public void LeerArchivo() {
+                    string ruta = "ruta/del/archivo.txt";
+                    using (StreamReader lector = new StreamReader(ruta)) {
+                        string contenido = lector.ReadToEnd();
+                        Console.WriteLine(contenido);
+                    }
+                }
+            }
+        </pre>
+    </div>
+
+    <div class="contenido" id="Resumen">
+        <h2>Resumen sobre Archivos en C#</h2>
+        <p>
+            En resumen, el manejo de archivos en C# es fundamental para la persistencia de datos. Usando el espacio de nombres <code>System.IO</code> puedes crear, leer, escribir y manipular archivos de manera eficiente. Las clases <code>File</code>,
+            <code>StreamWriter</code>, y <code>StreamReader</code> son esenciales para realizar operaciones comunes en archivos.
+        </p>
+    </div>
+</body>
+
+</html>
