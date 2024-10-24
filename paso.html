@@ -1,105 +1,130 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pasos para Manejar Archivos en C#</title>
-    <link rel="stylesheet" href="/styles.css">
+    <title>Menú Ocultable con CSS</title>
+    <style>
+        /* Estilos generales */
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        
+        header {
+            background-color: #333;
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        /* Estilos para el menú */
+        
+        nav {
+            position: relative;
+        }
+        
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        
+        nav ul li {
+            margin: 0 10px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        /* Estilos para el input checkbox y el menú responsive */
+        
+        #menu-toggle {
+            display: none;
+        }
+        
+        label {
+            display: none;
+            /* Ocultamos el ícono de hamburguesa por defecto */
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            /* Para pantallas pequeñas, escondemos el menú por defecto */
+            nav ul {
+                flex-direction: column;
+                position: absolute;
+                top: 30px;
+                /* Ajuste la posición debajo del icono */
+                right: 0px;
+                width: 200px;
+                background-color: #520d0d;
+                /* Color del menú igual al header */
+                /* Ancho del menú */
+                display: none;
+            }
+            /* Al marcar el checkbox, mostramos el menú */
+            #menu-toggle:checked~nav ul {
+                display: block;
+                /* Ajuste para que salga del lado izquierdo */
+            }
+            /* Mostramos el ícono de hamburguesa */
+            label {
+                display: block;
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                /* Alineamos a la derecha el icono */
+            }
+            /* Estilos del menú cuando se despliega */
+            nav ul li {
+                margin: 0;
+                width: 100%;
+                /* Aseguramos que los items del menú ocupen todo el ancho del menú desplegado */
+            }
+        }
+    </style>
 </head>
 
 <body>
+
     <header>
-        <div class="logo">
-            <img src="/img/logo.png" alt="Logo de tu sitio">
-
-        </div>
-
+        <div class="logo">Mi Sitio</div>
+        <!-- Checkbox para controlar el menú -->
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle">&#9776;</label>
+        <!-- Menú de navegación -->
         <nav>
             <ul>
-                <li><a href="#definicion">Definición</a></li>
-                <li><a href="#declaracion">Declaración</a></li>
-                <li><a href="#creacion">Creación de Objetos</a></li>
-                <li><a href="#manipulacion">Manipulación</a></li>
-                <li><a href="#resumen">Resumen</a></li>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Servicios</a></li>
+                <li><a href="#">Proyectos</a></li>
+                <li><a href="#">Contacto</a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="contenido" id="definicion">
-        <h2>Definición de Archivos en C#</h2>
-        <p>
-            En C#, los archivos son representaciones físicas de los datos almacenados en el sistema. Permiten la lectura y escritura de datos en el disco.
-            <strong>System.IO</strong> es el espacio de nombres que se utiliza para trabajar con archivos y directorios.
-        </p>
-        <img src="/img/definicion.png" alt="Definición de Archivos en C#" class="imagen-paso">
-    </div>
-
-    <div class="contenido" id="declaracion">
-        <h2>Declaración de Archivos en C#</h2>
-        <p>
-            Para trabajar con archivos, es necesario utilizar el espacio de nombres <code>System.IO</code>. Aquí se declara un archivo utilizando las clases disponibles.
-        </p>
-        <pre>
-using System.IO;
-
-class ArchivoEjemplo {
-    public void CrearArchivo() {
-        string ruta = "ruta/del/archivo.txt";
-        if (!File.Exists(ruta)) {
-            File.Create(ruta);
-        }
-    }
-}</pre>
-        <img src="/img/declaracion.png" alt="Declaración de Archivos" class="imagen-paso">
-    </div>
-
-    <div class="contenido" id="creacion">
-        <h2>Creación de Objetos para Manejo de Archivos</h2>
-        <p>
-            Para trabajar con archivos, puedes crear objetos de clases como <code>StreamWriter</code> y <code>StreamReader</code>.
-        </p>
-        <pre>
-using System.IO;
-
-class ArchivoEjemplo {
-    public void EscribirArchivo() {
-        string ruta = "ruta/del/archivo.txt";
-        using (StreamWriter escritor = new StreamWriter(ruta)) {
-            escritor.WriteLine("Este es un ejemplo de escritura en un archivo.");
-        }
-    }
-}</pre>
-        <img src="/img/creacion.png" alt="Creación de Objetos" class="imagen-paso">
-    </div>
-
-    <div class="contenido" id="manipulacion">
-        <h2>Manipulación de Archivos en C#</h2>
-        <p>
-            Puedes leer el contenido de un archivo o escribir más datos en él utilizando <code>StreamReader</code> y <code>StreamWriter</code>.
-        </p>
-        <pre>
-using System.IO;
-
-class ArchivoEjemplo {
-    public void LeerArchivo() {
-        string ruta = "ruta/del/archivo.txt";
-        using (StreamReader lector = new StreamReader(ruta)) {
-            string contenido = lector.ReadToEnd();
-            Console.WriteLine(contenido);
-        }
-    }
-}</pre>
-        <img src="/img/manipulacion.png" alt="Manipulación de Archivos" class="imagen-paso">
-    </div>
-
-    <div class="contenido" id="resumen">
-        <h2>Resumen sobre Archivos en C#</h2>
-        <p>
-            El manejo de archivos en C# es fundamental para la persistencia de datos. Usando el espacio de nombres <strong>System.IO</strong>, puedes crear, leer, escribir y manipular archivos de manera eficiente.
-        </p>
-        <img src="/img/resumen.png" alt="Resumen sobre Archivos" class="imagen-paso">
-    </div>
 </body>
 
 </html>
