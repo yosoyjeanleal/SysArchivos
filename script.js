@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         preguntasDiv.style.display = 'none';
         resultadoDiv.style.display = 'block';
         nombreResultado.textContent = 'Nombre: ' + nombreEstudiante;
-        calificacionResultado.textContent = 'Calificación: ' + calificacion + '/6';
+        calificacionResultado.textContent = 'Calificación: ' + calificacion + '/5';
     }
 
     // Mostrar/ocultar menú hamburguesa
