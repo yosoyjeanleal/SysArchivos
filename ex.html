@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explicación del Código en C#</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        
+        h1,
+        h2 {
+            color: #333;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-left: 5px solid #ccc;
+            overflow-x: auto;
+        }
+        
+        code {
+            font-family: monospace;
+            color: #d63384;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Explicación del Código en C#</h1>
+
+    <h2>1. Espacios de Nombres y Clase Principal</h2>
+    <pre><code>using System;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace Sys_Archivo
+{
+    public partial class MainForm : Form
+    {
+        ...
+    }
+}</code></pre>
+    <p><strong>using:</strong> Estas declaraciones importan bibliotecas necesarias, como <code>System.IO</code> para operaciones de archivos y <code>System.Windows.Forms</code> para la interfaz gráfica.</p>
+    <p><strong>namespace Sys_Archivo:</strong> Define un espacio de nombres para organizar el código.</p>
+    <p><strong>public partial class MainForm : Form:</strong> Declara la clase <code>MainForm</code>, que hereda de <code>Form</code>, representando la ventana principal de la aplicación.</p>
+
+    <h2>2. Variables de Clase</h2>
+    <pre><code>private string rutaCarpeta = @"C:\Users\Personal\Desktop\DATOS";
+private string rutaArchivo;</code></pre>
+    <p><strong>rutaCarpeta:</strong> Almacena la ruta de la carpeta donde se buscarán los archivos.</p>
+    <p><strong>rutaArchivo:</strong> Se usará para almacenar la ruta del archivo seleccionado.</p>
+
+    <h2>3. Constructor</h2>
+    <pre><code>public MainForm()
+{
+    InitializeComponent(); // Inicializa los componentes del formulario
+    CargarArchivos(); // Carga archivos al iniciar
+}</code></pre>
+    <p><strong>InitializeComponent():</strong> Método generado automáticamente que inicializa todos los componentes visuales.</p>
+    <p><strong>CargarArchivos():</strong> Llama al método para cargar archivos desde la carpeta definida.</p>
+
+    <h2>4. Método CargarArchivos</h2>
+    <pre><code>private void CargarArchivos()
+{
+    listBoxArchivos.Items.Clear(); // Limpiar el ListBox
+    if (Directory.Exists(rutaCarpeta))
+    {
+        string[] archivos = Directory.GetFiles(rutaCarpeta);
+        foreach (string archivo in archivos)
+        {
+            listBoxArchivos.Items.Add(Path.GetFileName(archivo)); // Agregar solo el nombre del archivo
+        }
+    }
+    else
+    {
+        listBoxArchivos.Items.Add("No hay archivos en la carpeta.");
+    }
+}</code></pre>
+    <p><strong>listBoxArchivos.Items.Clear():</strong> Limpia el contenido previo del ListBox que muestra los archivos.</p>
+    <p><strong>Directory.Exists(rutaCarpeta):</strong> Verifica si la carpeta existe.</p>
+    <p><strong>Directory.GetFiles(rutaCarpeta):</strong> Obtiene la lista de archivos en la carpeta.</p>
+    <p><strong>Path.GetFileName(archivo):</strong> Extrae solo el nombre del archivo (sin la ruta) para agregarlo al ListBox.</p>
+
+    <h2>5. Método CargarContenido</h2>
+    <pre><code>private void CargarContenido(string nombreArchivo)
+{
+    listBoxContenido.Items.Clear(); // Limpiar el ListBox de contenido
+    rutaArchivo = Path.Combine(rutaCarpeta, nombreArchivo); // Actualiza la ruta del archivo seleccionado
+
+    if (File.Exists(rutaArchivo))
+    {
+        ...
+    }
+    else
+    {
+        labelMensaje.Text = "El archivo no existe."; // Mostrar mensaje
+    }
+}</code></pre>
+    <p>Este método carga el contenido de un archivo específico en el ListBox <code>listBoxContenido</code>. Verifica si el archivo existe y, si es así, lee sus líneas y las añade al ListBox.</p>
+
+    <h2>6. Agregar Contenido a un Archivo</h2>
+    <pre><code>void BtnAgregarContenidoClick(object sender, EventArgs e)
+{
+    string contenido = txtAccion.Text.Trim();
+    ...
+}</code></pre>
+    <p>Este método se llama al hacer clic en un botón para agregar contenido a un archivo existente. Verifica si el contenido está vacío y si el archivo existe antes de intentar agregarlo.</p>
+
+    <h2>7. Eliminar un Archivo</h2>
+    <pre><code>void BtnEliminarArchivoClick(object sender, EventArgs e)
+{
+    if (listBoxArchivos.SelectedItem != null)
+    {
+        ...
+    }
+}</code></pre>
+    <p>Permite al usuario eliminar un archivo seleccionado del ListBox <code>listBoxArchivos</code>. Verifica si un archivo está seleccionado y si existe antes de proceder a eliminarlo.</p>
+
+    <h2>8. Leer un Archivo</h2>
+    <pre><code>void BtnLeerArchivoClick(object sender, EventArgs e)
+{
+    if (listBoxArchivos.SelectedItem != null)
+    {
+        string nombreArchivo = listBoxArchivos.SelectedItem.ToString();
+        CargarContenido(nombreArchivo); // Cargar contenido del archivo seleccionado
+    }
+}</code></pre>
+    <p>Carga el contenido del archivo seleccionado en el ListBox <code>listBoxContenido</code>.</p>
+
+    <h2>9. Crear un Archivo</h2>
+    <pre><code>void BtnCrearArchivoClick(object sender, EventArgs e)
+{
+    string nuevoArchivo = txtAccion.Text.Trim();
+    ...
+}</code></pre>
+    <p>Permite crear un nuevo archivo en la carpeta especificada, asegurándose de que no exista ya un archivo con el mismo nombre.</p>
+
+    <h2>10. Editar Contenido de un Archivo</h2>
+    <pre><code>void BtnEditarContenidoClick(object sender, EventArgs e)
+{
+    if (listBoxContenido.SelectedItem != null)
+    {
+        ...
+    }
+}</code></pre>
+    <p>Permite editar una línea seleccionada en el ListBox <code>listBoxContenido</code>. Verifica que una línea esté seleccionada y luego reemplaza el contenido de esa línea en el archivo.</p>
+
+    <h2>11. Buscar Contenido en un Archivo</h2>
+    <pre><code>void BtnBuscarContenidoClick(object sender, EventArgs e)
+{
+    string searchTerm = txtAccion.Text.ToLower();
+    ...
+}</code></pre>
+    <p>Busca un término específico en el contenido de un archivo y actualiza el ListBox <code>listBoxContenido</code> con las coincidencias encontradas.</p>
+
+    <h2>12. Buscar Archivos en la Carpeta</h2>
+    <pre><code>void BtnBuscarArchivoClick(object sender, EventArgs e)
+{
+    string searchTerm = txtAccion.Text.ToLower();
+    ...
+}</code></pre>
+    <p>Permite buscar archivos en la carpeta según un término ingresado, actualizando el ListBox <code>listBoxArchivos</code> con los resultados.</p>
+
+    <h2>13. Mostrar Todos los Archivos</h2>
+    <pre><code>void BtnMostrarTodosArchivosClick(object sender, EventArgs e)
+{
+    CargarArchivos(); // Llama al método para cargar todos los archivos
+    labelMensaje.Text = "Mostrando todos los archivos."; // Mensaje informativo
+}</code></pre>
+    <p>Recarga todos los archivos en el ListBox al hacer clic en el botón correspondiente.</p>
+
+    <h2>14. Eventos de Carga y Click de PictureBox</h2>
+    <pre><code>void PictureBox1Click(object sender, EventArgs e)
+{
+    // Aquí puedes agregar la funcionalidad que necesites para PictureBox
+}
+
+void MainFormLoad(object sender, EventArgs e)
+{
+    // Aquí puedes agregar la funcionalidad que necesites al cargar el formulario
+}</code></pre>
+    <p>Espacios reservados para agregar funcionalidades adicionales en el PictureBox o al cargar el formulario.</p>
+
+</body>
+
+</html>
