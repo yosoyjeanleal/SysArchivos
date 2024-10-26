@@ -161,19 +161,24 @@
             estas operaciones.
         </p>
 
-        <h3>Crear un Nuevo Archivo</h3>
+        <h3>Nuevo o Creacion de un Archivo</h3>
         <p>
             Puedes crear un nuevo archivo utilizando la clase <code>File</code>. Si el archivo ya existe, puedes optar por sobrescribirlo o crear uno nuevo con un nombre diferente.
         </p>
         <pre>
-            using System.IO;
-    
-            class ArchivoEjemplo {
-                public void CrearNuevoArchivo() {
-                    string ruta = "ruta/nuevo_archivo.txt";
-                    File.WriteAllText(ruta, "Contenido inicial del nuevo archivo.");
-                }
-            }
+            private void btnCrearArchivo_Click(object sender, EventArgs e)
+{
+    string ruta = txtRuta.Text; // Obtiene la ruta del archivo ingresada en el TextBox
+    try
+    {
+        File.Create(ruta); // Intenta crear el archivo en la ruta especificada
+        MessageBox.Show("Archivo creado exitosamente"); // Muestra mensaje de éxito
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show("Error al crear el archivo: " + ex.Message); // Muestra mensaje de error
+    }
+}
         </pre>
 
         <h3>Eliminar un Archivo</h3>
@@ -181,56 +186,89 @@
             Para eliminar un archivo, puedes utilizar el método <code>File.Delete</code>. Asegúrate de que el archivo exista antes de intentar eliminarlo para evitar excepciones.
         </p>
         <pre>
-            using System.IO;
-    
-            class ArchivoEjemplo {
-                public void EliminarArchivo() {
-                    string ruta = "ruta/del/archivo.txt";
-                    if (File.Exists(ruta)) {
-                        File.Delete(ruta);
+            private void btnEliminarArchivo_Click(object sender, EventArgs e)
+            {
+                string ruta = txtRuta.Text; // Obtiene la ruta del archivo
+                if (File.Exists(ruta)) // Verifica si el archivo existe
+                {
+                    try
+                    {
+                        File.Delete(ruta); // Intenta eliminar el archivo
+                        MessageBox.Show("Archivo eliminado exitosamente"); // Muestra mensaje de éxito
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error al eliminar el archivo: " +  ex.Message); // Muestra mensaje de error
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("El archivo no existe."); // Informa si el archivo no se encuentra
                 }
             }
         </pre>
 
-        <h3>Buscar Contenido en un Archivo</h3>
+        <h3>Buscar un Archivo</h3>
         <p>
-            Puedes buscar contenido específico dentro de un archivo leyendo línea por línea. Este método permite verificar si una cadena está presente en el archivo.
+            Puedes buscar un archivo leyendo línea por línea. Este método permite verificar si una cadena está presente en el archivo.
         </p>
         <pre>
-            using System.IO;
-    
-            class ArchivoEjemplo {
-                public void BuscarEnArchivo(string textoBuscado) {
-                    string ruta = "ruta/del/archivo.txt";
-                    using (StreamReader lector = new StreamReader(ruta)) {
-                        string linea;
-                        while ((linea = lector.ReadLine()) != null) {
-                            if (linea.Contains(textoBuscado)) {
-                                Console.WriteLine($"Encontrado: {linea}");
-                            }
-                        }
-                    }
-                }
-            }
+            private void btnBuscarArchivo_Click(object sender, EventArgs e)
+{
+    string ruta = txtRuta.Text; // Obtiene la ruta del directorio a buscar
+    if (Directory.Exists(ruta)) // Verifica si el directorio existe
+    {
+        // Obtiene todos los archivos en el directorio y sus subdirectorios
+        string[] archivos = Directory.GetFiles(ruta, ".", SearchOption.AllDirectories);
+
+        // Limpia la lista de resultados
+        listBoxArchivos.Items.Clear();
+
+        // Agrega los archivos encontrados a la lista
+        foreach (string archivo in archivos)
+        {
+            listBoxArchivos.Items.Add(Path.GetFileName(archivo)); // Muestra solo el nombre del archivo
+        }
+    }
+    else
+    {
+        MessageBox.Show("La carpeta no existe.");
+    }
+}
         </pre>
 
-        <h3>Mostrar el Contenido de un Archivo</h3>
+        <h3>Mostrar un Archivo</h3>
         <p>
-            Para mostrar el contenido de un archivo en la consola, puedes utilizar <code>StreamReader</code> para leer todo el contenido y luego imprimirlo.
+            Para mostrar un archivo en la consola, puedes utilizar <code>StreamReader</code> para leer todo el contenido y luego imprimirlo.
         </p>
         <pre>
-            using System.IO;
-    
-            class ArchivoEjemplo {
-                public void MostrarContenido() {
-                    string ruta = "ruta/del/archivo.txt";
-                    using (StreamReader lector = new StreamReader(ruta)) {
-                        string contenido = lector.ReadToEnd();
-                        Console.WriteLine(contenido);
-                    }
-                }
+            private void btnMostrarContenido_Click(object sender, EventArgs e)
+{
+    string ruta = txtRuta.Text;
+    if (File.Exists(ruta))
+    {
+        try
+        {
+            // Lee todas las líneas del archivo en un arreglo de cadenas
+            string[] lineas = File.ReadAllLines(ruta);
+
+            // Limpia la lista y agrega las líneas
+            listBoxContenido.Items.Clear();
+            foreach (string linea in lineas)
+            {
+                listBoxContenido.Items.Add(linea);
             }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show("Error al leer el archivo: " + ex.Message);
+        }
+    }
+    else
+    {
+        MessageBox.Show("El archivo no existe.");
+    }
+}
         </pre>
     </div>
 
