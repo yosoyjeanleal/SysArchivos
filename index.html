@@ -28,6 +28,7 @@
                 <li><a href="#Creacion">Creación de Objetos</a></li>
                 <li><a href="#Manipulacion">Manipulación</a></li>
                 <li><a href="#Resumen">Resumen</a></li>
+                <li><a href="Proyecto.html">Proyecto</a></li>
                 <li><a href="/examen.html">Prueba</a></li>
             </ul>
         </nav>
@@ -40,16 +41,53 @@
             <code>System.IO</code> para trabajar con archivos y directorios, como la clase <code>File</code>,
             <code>StreamReader</code>, <code>StreamWriter</code>, entre otras.
         </p>
+        <h3>Definición Teórica</h3>
+        <p>
+            Un archivo es una colección de información almacenada en un sistema de archivos. Cada archivo tiene un nombre y una extensión que indica su tipo. En programación, los archivos pueden ser de texto, binarios, de imagen, entre otros. Los sistemas operativos
+            proporcionan mecanismos para crear, leer, escribir y eliminar archivos, lo cual es esencial para la gestión de datos.
+        </p>
+
+        <h3>Usos y Utilidades de Archivos</h3>
+        <p>
+            Los archivos son utilizados en una amplia variedad de aplicaciones, tales como:
+        </p>
+        <ul>
+            <li><strong>Almacenamiento de datos persistentes:</strong> Los archivos permiten guardar información de manera permanente, facilitando la recuperación de datos después de cerrar una aplicación.</li>
+            <li><strong>Intercambio de datos:</strong> Los archivos pueden ser utilizados para compartir información entre diferentes aplicaciones o sistemas, utilizando formatos estándar como CSV, JSON o XML.</li>
+            <li><strong>Registro de eventos:</strong> Muchas aplicaciones utilizan archivos para registrar eventos o errores, lo que ayuda en la depuración y monitoreo del funcionamiento del software.</li>
+            <li><strong>Configuraciones:</strong> Los archivos de configuración permiten a los usuarios personalizar el comportamiento de una aplicación sin modificar el código fuente.</li>
+            <li><strong>Almacenamiento de contenido multimedia:</strong> Los archivos de imagen, audio y video son fundamentales para aplicaciones que gestionan contenido multimedia.</li>
+        </ul>
+        <p>
+            En resumen, el manejo de archivos en C# es fundamental para la persistencia de datos y la interacción entre aplicaciones, haciendo de los archivos una herramienta esencial en el desarrollo de software.
+        </p>
     </div>
 
     <div class="contenido" id="Declaracion">
         <h2>Declaración de Archivos en C#</h2>
         <p>
-            Para trabajar con archivos en C#, es necesario utilizar el espacio de nombres <code>System.IO</code>. Aquí se declara un archivo utilizando las clases disponibles. Un ejemplo básico de declaración sería:
+            Para trabajar con archivos en C#, es necesario utilizar el espacio de nombres <code>System.IO</code>. Aquí te mostramos cómo declarar archivos en C#.
+        </p>
+        <ol>
+            <li>Se agrega la directiva <code>using System.IO;</code> al principio de tu archivo C#.</li>
+            <li>Después de declarar un archivo, debes crear una instancia de la clase <code>FileStream</code> (esta clase representa un archivo en el disco que permite leer y escribir en él).</li>
+            <li>Para crear una instancia de esta clase, proporciona una ruta del archivo y el modo de acceso. Puedes probar con otras clases de manejo de archivo como <code>StreamReader</code> para leer el contenido del archivo.</li>
+            <pre>
+                FileStream archivo = new FileStream("ruta_del_archivo", FileMode.Open, FileAccess.Read);
+            </pre>
+            </li>
+            <li>Finalmente, cuando hayas terminado de trabajar con el archivo, debes cerrarlo para liberar recursos del sistema:
+                <pre>
+                archivo.Close();
+            </pre>
+            </li>
+        </ol>
+        <p>
+            Un ejemplo básico de declaración sería:
         </p>
         <pre>
             using System.IO;
-
+    
             class ArchivoEjemplo {
                 public void CrearArchivo() {
                     string ruta = "ruta/del/archivo.txt";
@@ -65,31 +103,34 @@
         <h2>Creación de Objetos para Manejo de Archivos</h2>
         <p>
             Para trabajar con archivos en C#, puedes crear objetos de clases como <code>StreamWriter</code> y
-            <code>StreamReader</code> para escribir y leer archivos, respectivamente. Por ejemplo:
+            <code>StreamReader</code> para escribir y leer archivos, respectivamente. A continuación, se detallan algunos ejemplos y consideraciones al crear objetos para la manipulación de archivos.
+        </p>
+
+        <h3>Creación de un StreamWriter</h3>
+        <p>
+            <code>StreamWriter</code> es una clase que permite escribir texto en un archivo. Al crear una instancia de <code>StreamWriter</code>, se puede especificar si se desea sobrescribir el archivo existente o agregar contenido nuevo.
         </p>
         <pre>
             using System.IO;
-
+    
             class ArchivoEjemplo {
                 public void EscribirArchivo() {
                     string ruta = "ruta/del/archivo.txt";
-                    using (StreamWriter escritor = new StreamWriter(ruta)) {
+                    using (StreamWriter escritor = new StreamWriter(ruta, true)) { // 'true' permite agregar contenido
                         escritor.WriteLine("Este es un ejemplo de escritura en un archivo.");
                     }
                 }
             }
         </pre>
-    </div>
 
-    <div class="contenido" id="Manipulacion">
-        <h2>Manipulación de Archivos en C#</h2>
+        <h3>Creación de un StreamReader</h3>
         <p>
-            Una vez que tienes un archivo creado, puedes leer su contenido o escribir más datos en él utilizando
-            <code>StreamReader</code> y <code>StreamWriter</code>. Aquí un ejemplo de cómo leer un archivo:
+            <code>StreamReader</code> es la clase utilizada para leer texto de un archivo. Permite leer datos de forma secuencial. Es importante utilizar el bloque <code>using</code> para asegurar que el recurso sea liberado adecuadamente después de su
+            uso.
         </p>
         <pre>
             using System.IO;
-
+    
             class ArchivoEjemplo {
                 public void LeerArchivo() {
                     string ruta = "ruta/del/archivo.txt";
@@ -100,7 +141,99 @@
                 }
             }
         </pre>
+
+        <h3>Consideraciones al Manejar Archivos</h3>
+        <p>
+            Al trabajar con archivos, es importante considerar:
+        </p>
+        <ul>
+            <li><strong>Rutas de archivo:</strong> Asegúrate de que la ruta al archivo sea correcta. Puedes usar rutas relativas o absolutas.</li>
+            <li><strong>Manejo de excepciones:</strong> Siempre es recomendable manejar excepciones para tratar errores de entrada/salida, como archivos no encontrados o problemas de permisos.</li>
+            <li><strong>Cierre de recursos:</strong> Utiliza bloques <code>using</code> para asegurarte de que los objetos de archivos se cierren y liberen adecuadamente después de su uso.</li>
+        </ul>
     </div>
+
+
+    <div class="contenido" id="Manipulacion">
+        <h2>Manipulación de Archivos en C#</h2>
+        <p>
+            Una vez que tienes un archivo creado, puedes realizar varias operaciones como crear nuevos archivos, eliminar archivos existentes, buscar contenido en archivos y mostrar su contenido. A continuación, se presentan ejemplos y explicaciones de cada una de
+            estas operaciones.
+        </p>
+
+        <h3>Crear un Nuevo Archivo</h3>
+        <p>
+            Puedes crear un nuevo archivo utilizando la clase <code>File</code>. Si el archivo ya existe, puedes optar por sobrescribirlo o crear uno nuevo con un nombre diferente.
+        </p>
+        <pre>
+            using System.IO;
+    
+            class ArchivoEjemplo {
+                public void CrearNuevoArchivo() {
+                    string ruta = "ruta/nuevo_archivo.txt";
+                    File.WriteAllText(ruta, "Contenido inicial del nuevo archivo.");
+                }
+            }
+        </pre>
+
+        <h3>Eliminar un Archivo</h3>
+        <p>
+            Para eliminar un archivo, puedes utilizar el método <code>File.Delete</code>. Asegúrate de que el archivo exista antes de intentar eliminarlo para evitar excepciones.
+        </p>
+        <pre>
+            using System.IO;
+    
+            class ArchivoEjemplo {
+                public void EliminarArchivo() {
+                    string ruta = "ruta/del/archivo.txt";
+                    if (File.Exists(ruta)) {
+                        File.Delete(ruta);
+                    }
+                }
+            }
+        </pre>
+
+        <h3>Buscar Contenido en un Archivo</h3>
+        <p>
+            Puedes buscar contenido específico dentro de un archivo leyendo línea por línea. Este método permite verificar si una cadena está presente en el archivo.
+        </p>
+        <pre>
+            using System.IO;
+    
+            class ArchivoEjemplo {
+                public void BuscarEnArchivo(string textoBuscado) {
+                    string ruta = "ruta/del/archivo.txt";
+                    using (StreamReader lector = new StreamReader(ruta)) {
+                        string linea;
+                        while ((linea = lector.ReadLine()) != null) {
+                            if (linea.Contains(textoBuscado)) {
+                                Console.WriteLine($"Encontrado: {linea}");
+                            }
+                        }
+                    }
+                }
+            }
+        </pre>
+
+        <h3>Mostrar el Contenido de un Archivo</h3>
+        <p>
+            Para mostrar el contenido de un archivo en la consola, puedes utilizar <code>StreamReader</code> para leer todo el contenido y luego imprimirlo.
+        </p>
+        <pre>
+            using System.IO;
+    
+            class ArchivoEjemplo {
+                public void MostrarContenido() {
+                    string ruta = "ruta/del/archivo.txt";
+                    using (StreamReader lector = new StreamReader(ruta)) {
+                        string contenido = lector.ReadToEnd();
+                        Console.WriteLine(contenido);
+                    }
+                }
+            }
+        </pre>
+    </div>
+
 
     <div class="contenido" id="Resumen">
         <h2>Resumen sobre Archivos en C#</h2>
