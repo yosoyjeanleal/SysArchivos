@@ -65,6 +65,16 @@ nav a:hover {
     /* Posición desde el lado izquierdo, ajustable */
 }
 
+a[download] {
+    background-color: #005BBE;
+    /* Verde */
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
 .burger div {
     width: 25px;
     height: 3px;
