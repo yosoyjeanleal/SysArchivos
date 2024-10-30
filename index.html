@@ -163,49 +163,40 @@
 
         <h3>Nuevo o Creacion de un Archivo</h3>
         <p>
-            Puedes crear un nuevo archivo utilizando la clase <code>File</code>. Si el archivo ya existe, puedes optar por sobrescribirlo o crear uno nuevo con un nombre diferente.
+            Puedes crear un nuevo archivo utilizando la clase <code>File</code>. 
         </p>
         <pre>
-            private void btnCrearArchivo_Click(object sender, EventArgs e)
+            using System.IO;
+
+string rutaArchivo = "miNuevoArchivo.txt";
+
+using (FileStream fs = File.Create(rutaArchivo))
+using (StreamWriter sw = new StreamWriter(fs))
 {
-    string ruta = txtRuta.Text; // Obtiene la ruta del archivo ingresada en el TextBox
-    try
-    {
-        File.Create(ruta); // Intenta crear el archivo en la ruta especificada
-        MessageBox.Show("Archivo creado exitosamente"); // Muestra mensaje de éxito
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show("Error al crear el archivo: " + ex.Message); // Muestra mensaje de error
-    }
+    sw.WriteLine("Esta es la primera línea.");
+    sw.WriteLine("Esta es la segunda línea.");
 }
         </pre>
 
         <h3>Eliminar un Archivo</h3>
         <p>
-            Para eliminar un archivo, puedes utilizar el método <code>File.Delete</code>. Asegúrate de que el archivo exista antes de intentar eliminarlo para evitar excepciones.
+            Para eliminar un archivo, puedes utilizar el método <code>File.Delete</code>.
         </p>
         <pre>
-            private void btnEliminarArchivo_Click(object sender, EventArgs e)
-            {
-                string ruta = txtRuta.Text; // Obtiene la ruta del archivo
-                if (File.Exists(ruta)) // Verifica si el archivo existe
-                {
-                    try
-                    {
-                        File.Delete(ruta); // Intenta eliminar el archivo
-                        MessageBox.Show("Archivo eliminado exitosamente"); // Muestra mensaje de éxito
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Error al eliminar el archivo: " +  ex.Message); // Muestra mensaje de error
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("El archivo no existe."); // Informa si el archivo no se encuentra
-                }
-            }
+           using System.IO;
+
+string rutaArchivo = "archivoAeliminar.txt";
+
+// Eliminar el archivo
+if (File.Exists(rutaArchivo))
+{
+    File.Delete(rutaArchivo);
+    Console.WriteLine("Archivo eliminado correctamente.");
+}
+else
+{
+    Console.WriteLine("El archivo no existe.");
+}
         </pre>
 
         <h3>Buscar un Archivo</h3>
@@ -213,28 +204,32 @@
             Puedes buscar un archivo leyendo línea por línea. Este método permite verificar si una cadena está presente en el archivo.
         </p>
         <pre>
-            private void btnBuscarArchivo_Click(object sender, EventArgs e)
-{
-    string ruta = txtRuta.Text; // Obtiene la ruta del directorio a buscar
-    if (Directory.Exists(ruta)) // Verifica si el directorio existe
-    {
-        // Obtiene todos los archivos en el directorio y sus subdirectorios
-        string[] archivos = Directory.GetFiles(ruta, ".", SearchOption.AllDirectories);
+             string rutaArchivo = "miArchivo.txt";
+        string cadenaBuscar = "palabra a buscar";
 
-        // Limpia la lista de resultados
-        listBoxArchivos.Items.Clear();
-
-        // Agrega los archivos encontrados a la lista
-        foreach (string archivo in archivos)
+        if (File.Exists(rutaArchivo))
         {
-            listBoxArchivos.Items.Add(Path.GetFileName(archivo)); // Muestra solo el nombre del archivo
+            using (StreamReader sr = new StreamReader(rutaArchivo))
+            {
+                string linea;
+                int numeroLinea = 1;
+
+                while ((linea = sr.ReadLine()) != null)
+                {
+                    if (linea.Contains(cadenaBuscar))
+                    {
+                        Console.WriteLine($"La cadena '{cadenaBuscar}' se encontró en la línea {numeroLinea}:");
+                        Console.WriteLine(linea);
+                    }
+                    numeroLinea++;
+                }
+            }
+        }
+        else
+        {
+            Console.WriteLine("El archivo no existe.");
         }
     }
-    else
-    {
-        MessageBox.Show("La carpeta no existe.");
-    }
-}
         </pre>
 
         <h3>Mostrar un Archivo</h3>
@@ -242,33 +237,24 @@
             Para mostrar un archivo en la consola, puedes utilizar <code>StreamReader</code> para leer todo el contenido y luego imprimirlo.
         </p>
         <pre>
-            private void btnMostrarContenido_Click(object sender, EventArgs e)
-{
-    string ruta = txtRuta.Text;
-    if (File.Exists(ruta))
-    {
-        try
-        {
-            // Lee todas las líneas del archivo en un arreglo de cadenas
-            string[] lineas = File.ReadAllLines(ruta);
+            string rutaArchivo = "miArchivo.txt";
 
-            // Limpia la lista y agrega las líneas
-            listBoxContenido.Items.Clear();
-            foreach (string linea in lineas)
+        if (File.Exists(rutaArchivo))
+        {
+            using (StreamReader sr = new StreamReader(rutaArchivo))
             {
-                listBoxContenido.Items.Add(linea);
+                string linea;
+                while ((linea = sr.ReadLine()) != null)
+                {
+                    Console.WriteLine(linea);
+                }
             }
         }
-        catch (Exception ex)
+        else
         {
-            MessageBox.Show("Error al leer el archivo: " + ex.Message);
+            Console.WriteLine("El archivo no existe.");
         }
     }
-    else
-    {
-        MessageBox.Show("El archivo no existe.");
-    }
-}
         </pre>
     </div>
 
